@@ -1,0 +1,35 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+
+-A INPUT -m state --state INVALID -j DROP
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -i bridge -m physdev --physdev-in enp0s9 -j ACCEPT
+-A INPUT -i bridge -m physdev --physdev-in wlp0s14 -j ACCEPT
+-A INPUT -p ipv6-icmp -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m multiport --dports 5000:5100 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m set --match-set tcp dst -j ACCEPT
+-A INPUT -p udp -m state --state NEW -m multiport --dports 5000:5100 -j ACCEPT
+-A INPUT -p udp -m state --state NEW -m set --match-set udp dst -j ACCEPT
+
+-A FORWARD -m state --state INVALID -j DROP
+-A FORWARD -d fc00:face::/32 ! -p tcp -j REJECT
+
+-A OUTPUT -m state --state INVALID -j DROP
+-A OUTPUT -d fc00:face::/32 ! -p tcp -j REJECT
+
+COMMIT
+
+*nat
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+-A PREROUTING -d fc00:face::/32 -p tcp -m state --state NEW -j REDIRECT --to-ports 9055
+
+-A OUTPUT -d fc00:face::/32 -p tcp -m state --state NEW -m owner ! --uid-owner 43 -j REDIRECT --to-ports 9055
+
+COMMIT

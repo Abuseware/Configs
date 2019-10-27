@@ -1,0 +1,64 @@
+#!/usr/bin/nft -f
+
+table inet filter {
+  chain input {
+    type filter hook input priority 0;
+
+    # allow established/related connections
+    ct state {established, related} accept
+
+    # early drop of invalid connections
+    ct state invalid drop
+
+    # allow from loopback
+    iifname lo accept
+    
+    # allow local IPv6 network
+    ip6 saddr 2001:6a0:200:838b::/64 accept
+    ip6 saddr fc00::/64 accept
+    
+    # allow local IPv4 network
+    ip saddr 10.0.0.0/8 accept
+    ip saddr 172.16.0.0/16 accept
+
+    # allow icmp
+    ip protocol icmp limit rate 10/second accept
+    ip6 nexthdr icmpv6 limit rate 10/second accept
+
+    # allow tcp
+    tcp dport ssh limit rate 15/minute accept
+    tcp dport smtp accept
+    tcp dport http accept
+    tcp dport ident accept
+    tcp dport microsoft-ds accept
+    tcp dport netbios-ssn accept
+    tcp dport https accept
+    tcp dport urd accept
+    tcp dport submission accept
+    tcp dport openvpn accept
+    tcp dport distcc accept
+    tcp dport 9001 accept # Transmission
+    tcp dport 51413 accept # Transmission
+    
+    # allow udp
+    udp dport bootps accept
+    udp dport dhcpv6-server accept
+    udp dport netbios-ns accept
+    udp dport netbios-dgm accept
+    udp dport mdns accept
+    udp dport 51413 # Transmission
+
+    # everything else
+    reject
+  }
+  chain forward {
+    type filter hook forward priority 0;
+    ct state invalid drop
+  }
+  chain output {
+    type filter hook output priority 0;
+  }
+
+}
+
+# vim:set ts=2 sw=2 et:

@@ -1,0 +1,42 @@
+!### Xft ###
+Xft.dpi:                    96
+
+!### Cursor ###
+Xcursor.theme:              Oxygen_Zion
+Xcursor.size:               24
+
+
+!### URxvt ###
+URxvt.geometry:             132x50
+URxvt.depth:                32
+URxvt.background:           [95]#000000
+URxvt.foreground:           #ffffff
+
+URxvt.cursorColor:          #00ff00
+URxvt.cursorColor2:         #000000
+URxvt.cursorBlink:          True
+
+URxvt.title:                Terminal
+URxvt.iconName:             Terminal
+URxvt.iconFile:             /usr/local/share/icons/oxygen/32x32/apps/utilities-terminal.png
+URxvt.urgentOnBell:         True
+
+URxvt.font:                 xft:Source Code Pro:size=8:antialias=true
+URxvt.boldFont:
+URxvt.italicFont:
+URxvt.boldItalicFont:
+URxvt.skipBuiltinGlyphs:    True
+URxvt.pastableTabs:         True
+
+URxvt.scrollBar:            False
+URxvt.scrollTtyOutput:      False
+URxvt.scrollWithBuffer:     True
+URxvt.scrollTtyKeypress:    True
+
+URxvt.perl-ext:             default,bell-command,confirm-paste,matcher
+
+URxvt.bell-command:         play -q /usr/local/share/sounds/KDE-Sys-App-Message.ogg
+
+URxvt.url-launcher:         xdg-open
+URxvt.keysym.C-Delete:      matcher:last
+URxvt.keysym.M-Delete:      matcher:list
