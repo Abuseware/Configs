@@ -1,5 +1,4 @@
-sys-process/cronie inotify cronie
+sys-process/cronie inotify anacron
 sys-kernel/gentoo-sources symlink
 app-misc/mc -slang
 app-emulation/open-vm-tools -resolutionkms -multimon
-# package.use
