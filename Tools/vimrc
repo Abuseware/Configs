@@ -1,0 +1,35 @@
+set nocompatible
+colorscheme slate
+syntax on
+filetype indent plugin on
+
+if has("gui_running")
+    set lines=50 columns=150
+endif
+
+set colorcolumn=80
+
+set confirm
+set hidden
+set showcmd
+set wildmenu
+set hlsearch
+set ruler
+set laststatus=2
+set cmdheight=2
+
+set ignorecase
+set smartcase
+
+set backspace=indent,eol,start
+set autoindent
+set nostartofline
+set mouse=a
+set number
+
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set wrap!
+:set list
+:set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
