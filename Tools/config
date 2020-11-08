@@ -1,0 +1,21 @@
+Host *
+	IdentityFile ~/.ssh/id_ed25519
+	IdentityFile ~/.ssh/id_ecdsa
+	IdentityFile ~/.ssh/id_dsa
+	IdentityFile ~/.ssh/id_rsa
+
+	PreferredAuthentications publickey,keyboard-interactive
+	VerifyHostKeyDNS yes
+	UpdateHostKeys ask
+	#HashKnownHosts yes
+	UseKeychain yes
+	#GSSAPIAuthentication yes
+
+	Compression yes
+
+	ControlMaster auto
+	ControlPath /tmp/ssh-%C
+	ControlPersist 60
+
+	ServerAliveInterval 5
+	ServerAliveCountMax 2
